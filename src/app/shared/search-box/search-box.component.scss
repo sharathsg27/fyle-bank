@@ -1,0 +1,12 @@
+.search-wrap {
+  display: flex;
+  width: 100%;
+}
+
+.search-wrap__input {
+  width: 250px;
+  padding: 8px 8px 8px 5px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ED3947;
+}

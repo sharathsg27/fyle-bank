@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "fyle-bank"
+    }
+  },
+  "defaultProject": "fyle-bank",
+  "cli": {
+    "analytics": "b3008a23-03c8-4b0c-806a-5be102ad7a57"
+  }
 }

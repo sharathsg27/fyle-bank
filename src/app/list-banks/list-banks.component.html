@@ -1,0 +1,11 @@
+<div class="container fy--flex-column">
+  <div class="header">
+    <div class="search-wrap">
+      <app-search-box></app-search-box>
+    </div>
+  </div>
+  <div class="data_wrapper">
+    <app-data-table [displayItems]="banks" [headers]="bankHeaders" [items]="banks"
+                    [size]="bankHeaders.length"></app-data-table>
+  </div>
+</div>

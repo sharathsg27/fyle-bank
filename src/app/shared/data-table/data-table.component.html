@@ -1,0 +1,38 @@
+<div class="table-wrapper">
+  <div class="table">
+    <!-- Header -->
+    <div class="table--head">
+      <div class="table-row table-row--head">
+        <div *ngFor="let header of headers" class="table-cell table-cell--head">{{header}}</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div *ngIf="displayItems && displayItems.length" class="table--body">
+      <div *ngFor="let item of displayItems; let i = index" class="table-row table-row--body">
+        <div *ngFor="let itemDetail of item | keyvalue: keepOrder" [hidden]="itemDetail.key === 'isFavorite'"
+             class="table-cell table-cell--body">
+          <span *ngIf="itemDetail.key === 'id'">
+            <a (click)="markFavorite($event, itemDetail, item)" href="javascript:void(0);">
+              <fa-icon *ngIf="item.isFavorite" [icon]="faHeart"
+                       [styles]="{'color': '#ED3947', 'font-size': '1.2em', 'display': 'flex', 'align-self': 'center'}"></fa-icon>
+              <fa-icon *ngIf="!item.isFavorite" [icon]="faHeart"
+                       [styles]="{'color': '#ccc', 'font-size': '1.2em', 'display': 'flex', 'align-self': 'center'}"></fa-icon>
+            </a>
+          </span>
+          <span *ngIf="itemDetail.key !== 'id'">{{itemDetail.value}}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!displayItems || displayItems.length < 1" class="table--body">
+      <app-dot-spinner></app-dot-spinner>
+    </div>
+
+    <!-- Footer -->
+    <div *ngIf="displayItems && displayItems.length" class="table--footer">
+      <app-pagination (onPageSizeChange)="updateItems($event)" [displayItems]="displayItems"
+                      [items]="items"></app-pagination>
+    </div>
+
+  </div>
+</div>
