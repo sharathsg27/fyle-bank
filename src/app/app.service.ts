@@ -1,18 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {catchError, publishReplay, refCount, shareReplay, switchMap, take} from 'rxjs/operators';
-import {Observable, Subject, throwError, timer} from 'rxjs';
-import {LIST_BANKS_API} from '../constants/app.constants';
-
-const CACHE_SIZE = 1;
-const REFRESH_INTERVAL = 10000;
+import {catchError, publishReplay, refCount, take} from 'rxjs/operators';
+import {Subject, throwError} from 'rxjs';
+import {IBank} from './interfaces/IBank';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AppService {
-  private cache$: Observable<Array<any>>;
 
   // Observable string sources
   private searchTermSource = new Subject<string>();
@@ -33,7 +29,6 @@ export class AppService {
       refCount(),
       take(1),
       catchError(err => {
-        console.log(err);
         return throwError(err);
       })
     );
@@ -61,14 +56,23 @@ export class AppService {
       .some(key => item.hasOwnProperty(key) && new RegExp(searchTerm, 'gi').test(item[key])));
   };
 
+  /**
+   * Get data from session storage based on key
+   * @param {string} key
+   */
   getItemInSessionStorage = (key) => {
     if (sessionStorage.getItem(key) === '' || sessionStorage.getItem(key) == null) {
       return null;
     } else {
-      return JSON.parse(sessionStorage.getItem('favorites'));
+      return JSON.parse(sessionStorage.getItem(key));
     }
   };
 
+  /**
+   * Set items in session storage
+   * @param {string} key
+   * @param {Array} items
+   */
   setItemInSessionStorage = (key, items) => {
     sessionStorage.setItem(key, JSON.stringify(items));
   };

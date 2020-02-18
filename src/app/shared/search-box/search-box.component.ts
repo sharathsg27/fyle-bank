@@ -18,7 +18,6 @@ export class SearchBoxComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(value => {
-      console.log(value);
       this.appService.searchValue(value);
     });
   }

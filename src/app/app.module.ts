@@ -11,6 +11,8 @@ import {DataTableComponent} from './shared/data-table/data-table.component';
 import {PaginationComponent} from './pagination/pagination.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DotSpinnerComponent} from './shared/dot-spinner/dot-spinner.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {DotSpinnerComponent} from './shared/dot-spinner/dot-spinner.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,12 @@
-import {AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, OnInit} from '@angular/core';
 import {AppService} from '../../app.service';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit, AfterContentChecked {
   @Input('items') items: Array<any>;
@@ -14,9 +15,15 @@ export class DataTableComponent implements OnInit, AfterContentChecked {
   @Input('size') size: number;
   favoriteItems: any[] = [];
   faHeart = faHeart;
+  prevLength;
 
   constructor(private appService: AppService,
               private cdRef: ChangeDetectorRef) {
+    this.appService.searchTermEntered$.subscribe(value => {
+      if (value === '') {
+        this.displayItems = this.items;
+      }
+    });
   }
 
   ngOnInit() {
@@ -25,7 +32,6 @@ export class DataTableComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked() {
     this.cdRef.detectChanges();
-    console.log('check');
   }
 
   /**
