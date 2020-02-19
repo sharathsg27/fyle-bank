@@ -1,8 +1,8 @@
 <div class="container">
   <!-- set page size -->
   <div class="page-size select-dropdown">
-    <select (ngModelChange)="changePageNumber('', searchTerm.length ? currentArray : items);"
-            [(ngModel)]="currentPageSize" class="page-size__select">
+    <select [(ngModel)]="currentPageSize" (ngModelChange)="changePageNumber('', searchTerm.length ? currentArray : items);"
+             class="page-size__select">
       <option *ngFor="let size of pageSizes">{{size}}</option>
     </select>
   </div>
