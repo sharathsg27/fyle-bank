@@ -1,4 +1,5 @@
 <div class="search-wrap">
-  <input (ngModelChange)="searchValues()" [(ngModel)]="searchTerm" class="search-wrap__input" name="search-box"
+  <input [(ngModel)]="searchTerm"
+         (ngModelChange)="searchValues()" class="search-wrap__input" name="search-box"
          placeholder="Search" type="text">
 </div>
