@@ -8,7 +8,7 @@
   </div>
   <!-- change page number -->
   <div class="page-change">
-    <button (click)="changePageNumber('back', searchTerm.length ? currentArray : items)" class="page-change__button">
+    <button (click)="changePageNumber('back', searchTerm.length ? currentArray : items)" class="secondary__button">
       Previous
     </button>
     <div>
@@ -16,7 +16,7 @@
         <input (keyup.enter)="changePageNumber('', searchTerm.length ? currentArray : items)" [(ngModel)]="currentPage"
                [max]="totalPages" [min]="1" class="page-change__input" type="number"> of {{totalPages}}</span>
     </div>
-    <button (click)="changePageNumber('next', searchTerm.length ? currentArray : items)" class="page-change__button">
+    <button (click)="changePageNumber('next', searchTerm.length ? currentArray : items)" class="secondary__button">
       Next
     </button>
   </div>

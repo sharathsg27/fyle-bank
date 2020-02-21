@@ -8,11 +8,12 @@
     </div>
 
     <!-- Body -->
-    <div *ngIf="displayItems && displayItems.length" class="table--body">
-      <div *ngFor="let item of displayItems; let i = index" class="table-row table-row--body">
-        <div *ngFor="let itemDetail of item | keyvalue: keepOrder" [hidden]="itemDetail.key === 'isFavorite'"
-             class="table-cell table-cell--body">
-          <span *ngIf="itemDetail.key === 'id'">
+    <div class="table--body">
+      <div [hidden]="!hasRecords">
+        <div *ngFor="let item of displayItems; let i = index" class="table-row table-row--body">
+          <div *ngFor="let itemDetail of item | keyvalue: keepOrder" [hidden]="itemDetail.key == 'isFavorite'"
+               class="table-cell table-cell--body">
+          <span *ngIf="itemDetail.key == 'id'">
             <a (click)="markFavorite($event, itemDetail, item)" href="javascript:void(0);">
               <fa-icon *ngIf="item.isFavorite" [icon]="faHeart"
                        [styles]="{'color': '#ED3947', 'font-size': '1.2em', 'display': 'flex', 'align-self': 'center'}"></fa-icon>
@@ -20,17 +21,30 @@
                        [styles]="{'color': '#ccc', 'font-size': '1.2em', 'display': 'flex', 'align-self': 'center'}"></fa-icon>
             </a>
           </span>
-          <span *ngIf="itemDetail.key !== 'id'">{{itemDetail.value}}</span>
+            <span *ngIf="itemDetail.key == 'isFavorite'">
+            <a (click)="markFavorite($event, itemDetail, item)" href="javascript:void(0);">
+              {{itemDetail.value}}
+            </a>
+          </span>
+          <span *ngIf="itemDetail.key == 'bank_name'">
+            {{itemDetail.value}}
+            <a (click)="goToBank($event, item)" href="javascript:void(0);">
+              <fa-icon [icon]="faExternalLink"
+                       [styles]="{'color': '#ED3947', 'font-size': '1.2em', 'display': 'flex', 'align-self': 'center'}"></fa-icon>
+            </a>
+          </span>
+            <span *ngIf="itemDetail.key != 'id' && itemDetail.key != 'bank_name'">{{itemDetail.value}}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="!displayItems || displayItems.length < 1" class="table--body">
-      <app-dot-spinner></app-dot-spinner>
+      <div [hidden]="hasRecords">
+        <app-dot-spinner *ngIf="loading"></app-dot-spinner>
+      </div>
     </div>
 
     <!-- Footer -->
-    <div *ngIf="displayItems && displayItems.length" class="table--footer">
-      <app-pagination (onPageSizeChange)="updateItems($event)" [displayItems]="displayItems"
+    <div class="table--footer">
+      <app-pagination [hidden]="!hasRecords" (onPageSizeChange)="updateItems($event)" (hasRecords)="checkRecords($event)" [displayItems]="displayItems"
                       [items]="items"></app-pagination>
     </div>
   </div>

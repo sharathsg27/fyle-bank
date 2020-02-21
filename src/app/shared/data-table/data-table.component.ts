@@ -1,6 +1,19 @@
-import {AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, OnInit} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit, AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import {AppService} from '../../app.service';
-import {faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {NavigationExtras, Router} from '@angular/router';
+import has = Reflect.has;
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-data-table',
@@ -8,30 +21,25 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./data-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableComponent implements OnInit, AfterContentChecked {
+export class DataTableComponent implements OnInit {
   @Input('items') items: Array<any>;
   @Input('displayItems') displayItems: Array<any>;
   @Input('headers') headers: any[] = [];
   @Input('size') size: number;
+  @Input('loading') loading: boolean;
+  @Input('hasRecords') hasRecords: boolean;
   favoriteItems: any[] = [];
   faHeart = faHeart;
-  prevLength;
+  faExternalLink = faExternalLinkAlt;
 
   constructor(private appService: AppService,
-              private cdRef: ChangeDetectorRef) {
-    this.appService.searchTermEntered$.subscribe(value => {
-      if (value === '') {
-        this.displayItems = this.items;
-      }
-    });
+              private cdRef: ChangeDetectorRef,
+              private toastr: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.favoriteItems = this.appService.getItemInSessionStorage('fv-banks');
-  }
-
-  ngAfterContentChecked() {
-    this.cdRef.detectChanges();
   }
 
   /**
@@ -40,6 +48,11 @@ export class DataTableComponent implements OnInit, AfterContentChecked {
    * @param b
    */
   keepOrder = (a, b) => a;
+
+  checkRecords = (hasRecords) => {
+    this.hasRecords = hasRecords;
+    if (!this.hasRecords) this.toastr.error('No bank records found!');
+  }
 
   /**
    * update items on change
@@ -78,6 +91,21 @@ export class DataTableComponent implements OnInit, AfterContentChecked {
       this.favoriteItems.push(itemDetail.value);
       this.appService.setItemInSessionStorage('fv-banks', this.favoriteItems);
     }
+  }
+
+  /**
+   * View bank details by id
+   * @param event
+   * @param {Object} item
+   */
+  goToBank = (event, item) => {
+    event.stopPropagation();
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        ...item
+      }
+    };
+    this.router.navigate([`/banks/${item.bank_id}`], navigationExtras);
   }
 
 }

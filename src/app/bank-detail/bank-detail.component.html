@@ -1,0 +1,29 @@
+<section>
+  <div class="container">
+    <div class="fy-form">
+      <div class="fy-form-group">
+        <label class="fy-form__label" for="bank_name">Bank Name</label>
+        <input class="fy-form__input" type="text" id="bank_name" name="bank_name" [ngModel]="bank.bank_name" readonly>
+      </div>
+      <div class="fy-form-group">
+        <label class="fy-form__label" for="ifsc">IFSC</label>
+        <input class="fy-form__input" type="text" id="ifsc" name="ifsc" [ngModel]="bank.ifsc" readonly>
+      </div>
+      <div class="fy-form-group">
+        <label class="fy-form__label" for="state">State</label>
+        <input class="fy-form__input" type="text" id="state" name="state" [ngModel]="bank.state" readonly>
+      </div>
+      <div class="fy-form-group">
+        <label class="fy-form__label" for="district">District</label>
+        <input class="fy-form__input" type="text" id="district" name="district" [ngModel]="bank.district" readonly>
+      </div>
+      <div class="fy-form-group">
+        <label class="fy-form__label" for="address">Address</label>
+        <textarea class="fy-form__input" id="address" name="address" [ngModel]="bank.address" readonly></textarea>
+      </div>
+      <div class="fy-form-actions">
+        <button (click)="goBack()" class="secondary__button">Back</button>
+      </div>
+    </div>
+  </div>
+</section>

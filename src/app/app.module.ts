@@ -13,6 +13,9 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DotSpinnerComponent} from './shared/dot-spinner/dot-spinner.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
+import { BankDetailComponent } from './bank-detail/bank-detail.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import {environment} from '../environments/environment';
     DataTableComponent,
     PaginationComponent,
     DotSpinnerComponent,
+    BankDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,8 @@ import {environment} from '../environments/environment';
     HttpClientModule,
     FormsModule,
     FontAwesomeModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production, registrationStrategy: 'registerImmediately'})
   ],
   providers: [],

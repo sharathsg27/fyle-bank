@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="data_wrapper">
-    <app-data-table [displayItems]="banks" [headers]="bankHeaders" [items]="banks"
-                    [size]="bankHeaders.length"></app-data-table>
+    <app-data-table [displayItems]="displayBanks" [hasRecords]="hasRecords" [headers]="bankHeaders" [items]="banks"
+                    [size]="bankHeaders.length" [loading]="loading"></app-data-table>
   </div>
 </div>

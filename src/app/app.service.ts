@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, publishReplay, refCount, take} from 'rxjs/operators';
-import {Subject, throwError} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {IBank} from './interfaces/IBank';
 
 @Injectable({
